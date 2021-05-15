@@ -1,15 +1,52 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles storing the direction of a snake segment and rotating the object to
+/// the correct orientation based on the direction.
+/// </summary>
 [RequireComponent(typeof(SpriteRenderer))]
 public class SnakeSegment : MonoBehaviour
 {
-
+    /// <summary>
+    /// The sprite of the head snake segment.
+    /// </summary>
+    [Tooltip("The sprite of the head snake segment.")]
     public Sprite head;
+
+    /// <summary>
+    /// The sprite of the tail snake segment.
+    /// </summary>
+    [Tooltip("The sprite of the tail snake segment.")]
+    public Sprite tail;
+
+    /// <summary>
+    /// The sprite of a body snake segment.
+    /// </summary>
+    [Tooltip("The sprite of a body snake segment.")]
     public Sprite body;
+
+    /// <summary>
+    /// The sprite of a corner snake segment.
+    /// </summary>
+    [Tooltip("The sprite of a corner snake segment.")]
     public Sprite corner;
+
+    /// <summary>
+    /// The direction the snake segment is moving.
+    /// </summary>
     public Vector2 direction { get; private set; }
+
+    /// <summary>
+    /// The sprite renderer component on the snake segment.
+    /// </summary>
     private SpriteRenderer _spriteRenderer;
+
+    /// <summary>
+    /// The angle of rotation of every combination of directions. The first
+    /// layer of dictionaries is the new direction, and the second layer is the
+    /// previous direction.
+    /// </summary>
     private static Dictionary<Vector2, Dictionary<Vector2, float>> orientations;
 
     private void Awake()
@@ -35,14 +72,19 @@ public class SnakeSegment : MonoBehaviour
 
     public void Follow(SnakeSegment other, int index, int length)
     {
-        // Determine if the segment is the head, or a turning segment
+        // Determine if the segment is the head, tail, or a turning segment
         bool head = index == 0;
+        bool tail = index == length - 1;
         bool turning = this.direction != other.direction;
 
         // Set the correct sprite depending where the segment is in the snake
         if (index == 0)
         {
             _spriteRenderer.sprite = this.head;
+        }
+        else if (index == length - 1)
+        {
+            _spriteRenderer.sprite = this.tail;
         }
         else if (turning)
         {
@@ -53,9 +95,9 @@ public class SnakeSegment : MonoBehaviour
             _spriteRenderer.sprite = this.body;
         }
 
-        // The head segments should never be considered turning since
+        // The head and tail segments should never be considered turning since
         // the rotation would not match up to the corner pieces
-        if (turning && !head)
+        if (turning && !head && !tail)
         {
             SetDirection(other.direction, this.direction);
         }
@@ -107,4 +149,5 @@ public class SnakeSegment : MonoBehaviour
         orientations[Vector2.down].Add(Vector2.left, 270.0f);
         orientations[Vector2.down].Add(Vector2.right, 180.0f);
     }
+
 }
