@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Handles the movement of the snake and growing in size.
@@ -29,6 +30,11 @@ public class Snake : MonoBehaviour
     [Tooltip("The number of segments the snake has initially.")]
     public int initialSize = 4;
 
+
+    int fruitCollected = 0;
+    int livesLost = 0;
+    public List<GameObject> livesObj;
+
     private void Awake()
     {
         _head = GetComponent<SnakeSegment>();
@@ -42,7 +48,7 @@ public class Snake : MonoBehaviour
 
     private void Start()
     {
-        ResetState();
+        ResetState(false);
     }
 
     private void Update()
@@ -102,8 +108,20 @@ public class Snake : MonoBehaviour
         _segments.Add(segment);
     }
 
-    public void ResetState()
+    public void ResetState(bool lose)
     {
+        // Check livesLost, game over if 3
+        if (livesLost == 3)
+        {
+            SceneManager.LoadScene("End");
+        }
+        else if (lose)
+        {
+            // Remove a life
+            RemoveLife();
+        }
+
+
         // Set the initial direction of the snake, starting at the origin
         // (center of the grid)
         _head.SetDirection(Vector2.right, Vector2.zero);
@@ -127,6 +145,12 @@ public class Snake : MonoBehaviour
         }
     }
 
+    public void RemoveLife()
+    {
+        livesObj[livesLost].SetActive(false);
+        livesLost++;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Food")
@@ -137,7 +161,7 @@ public class Snake : MonoBehaviour
         else if (other.tag == "Obstacle")
         {
             // Game over, reset the state of the snake
-            ResetState();
+            ResetState(true);
         }
     }
 
