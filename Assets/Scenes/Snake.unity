@@ -600,7 +600,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.008289337, y: -0.032051086}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -611,7 +611,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 46, y: 22}
+  m_Size: {x: 16.477913, y: 8.575281}
   m_EdgeRadius: 0
 --- !u!4 &1572809536
 Transform:
@@ -931,7 +931,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a2d8955175e296d4a9c8446bdda3fc78, type: 3}
-  m_Color: {r: 0.9056604, g: 0.14239937, b: 0.14239937, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -949,7 +949,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2134486744}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.87, y: 0, z: 0}
+  m_LocalPosition: {x: 4.41, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -968,3 +968,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridArea: {fileID: 1572809535}
+  fruitSprites:
+  - {fileID: 21300000, guid: a2d8955175e296d4a9c8446bdda3fc78, type: 3}
+  - {fileID: 21300000, guid: d327c1a233a36e1498f6133539dc6225, type: 3}
+  - {fileID: 21300000, guid: 46c09b3249ae3a540ab20833afb12aea, type: 3}
+  - {fileID: 21300000, guid: e16e30b5b8f138942a3b81b4b58d9fc7, type: 3}
+  - {fileID: 21300000, guid: 32789e32c28e0a04dad87cbff5b9de26, type: 3}
+  - {fileID: 21300000, guid: a408d5ad3a4f40f48821be697637ca40, type: 3}

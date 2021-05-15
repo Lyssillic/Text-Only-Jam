@@ -1,12 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Food : MonoBehaviour
 {
     public BoxCollider2D gridArea;
+    public List<Sprite> fruitSprites;
 
     private void Start()
     {
         RandomizePosition();
+        RandomizeFruit();
     }
 
     private void RandomizePosition()
@@ -18,11 +21,19 @@ public class Food : MonoBehaviour
         this.transform.position = new Vector3(Mathf.Round(x), Mathf.Round(y), 0.0f);
     }
 
+    private void RandomizeFruit()
+    {
+        int randomIndex = Random.Range(0, fruitSprites.Count-1);
+        Sprite randomFruit = fruitSprites[randomIndex];
+        GetComponent<SpriteRenderer>().sprite = randomFruit;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
             RandomizePosition();
+            RandomizeFruit();
         }
     }
 }
