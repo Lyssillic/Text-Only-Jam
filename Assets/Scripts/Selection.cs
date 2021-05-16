@@ -18,11 +18,19 @@ public class Selection : MonoBehaviour
     bool toggleControls = true;
     string sceneName;
 
+    AudioSource audioSource;
+    AudioClip button;
+    AudioClip switchS;
+
     private void Start()
     {
         sceneName = SceneManager.GetActiveScene().name;
         btnSelectedIndex = 0;
         previousBtnSelectedIndex = -1;
+
+        audioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+        button = (AudioClip)Resources.Load("SFX/Button", typeof(AudioClip));
+        switchS = (AudioClip)Resources.Load("SFX/Switch", typeof(AudioClip));
 
         if (sceneName == "Start")
         {
@@ -56,11 +64,13 @@ public class Selection : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
+                audioSource.PlayOneShot(button, .5f);
                 btnSelected.onClick.Invoke();
             }
 
             if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
             {
+                audioSource.PlayOneShot(switchS, .5f);
                 previousBtnSelectedIndex = btnSelectedIndex;
                 if (btnSelectedIndex == 0)
                 {
@@ -75,6 +85,7 @@ public class Selection : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
             {
+                audioSource.PlayOneShot(switchS, .5f);
                 previousBtnSelectedIndex = btnSelectedIndex;
                 if (btnSelectedIndex == buttons.Length - 1)
                 {

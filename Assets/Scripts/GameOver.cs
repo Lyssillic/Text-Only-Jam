@@ -7,7 +7,8 @@ public class GameOver : MonoBehaviour
     public GameObject fruitObj;
     private void Start()
     {
-        string fruit = FruitCollected.fruitCollected.ToString();
+        FruitCollected fruitScript = GameObject.Find("Fruit Collected").GetComponent<FruitCollected>();
+        string fruit = fruitScript.fruitCollected.ToString();
 
         if (fruit.Length == 1)
         {

@@ -40,6 +40,13 @@ public class Snake : MonoBehaviour
     /// </summary>
     public List<GameObject> livesObj;
 
+    FruitCollected fruitScript;
+
+    AudioSource audioSource;
+    AudioClip snake;
+    AudioClip whoosh;
+    AudioClip crunch;
+
     private void Awake()
     {
         _head = GetComponent<SnakeSegment>();
@@ -53,9 +60,15 @@ public class Snake : MonoBehaviour
 
     private void Start()
     {
-        FruitCollected.fruitCollected = 0;
+        fruitScript = GameObject.Find("Fruit Collected").GetComponent<FruitCollected>();
+        fruitScript.fruitCollected = 0;
         livesLost = 0;
         ResetState(false);
+
+        audioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+        snake = (AudioClip)Resources.Load("SFX/Snake", typeof(AudioClip));
+        whoosh = (AudioClip)Resources.Load("SFX/Whoosh", typeof(AudioClip));
+        crunch = (AudioClip)Resources.Load("SFX/Crunch", typeof(AudioClip));
     }
 
     private void Update()
@@ -66,10 +79,12 @@ public class Snake : MonoBehaviour
             // Set the direction based on the input key being pressed
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
             {
+                audioSource.PlayOneShot(whoosh, .5f);
                 _head.SetDirection(Vector2.up, Vector2.zero);
             }
             else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
             {
+                audioSource.PlayOneShot(whoosh, .5f);
                 _head.SetDirection(Vector2.down, Vector2.zero);
             }
         }
@@ -79,10 +94,12 @@ public class Snake : MonoBehaviour
             // Set the direction based on the input key being pressed
             if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             {
+                audioSource.PlayOneShot(whoosh, .5f);
                 _head.SetDirection(Vector2.right, Vector2.zero);
             }
             else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
+                audioSource.PlayOneShot(whoosh, .5f);
                 _head.SetDirection(Vector2.left, Vector2.zero);
             }
         }
@@ -162,15 +179,18 @@ public class Snake : MonoBehaviour
     {
         if (other.tag == "Food")
         {
+            audioSource.PlayOneShot(crunch, .5f);
+
             // Food eaten, increase the size of the snake
             Grow();
 
             // Add fruit to collected
-            FruitCollected.fruitCollected++;
+            fruitScript.fruitCollected++;
         }
         else if (other.tag == "Obstacle")
         {
             // Game over, reset the state of the snake
+            audioSource.PlayOneShot(snake, .5f);
             ResetState(true);
         }
     }
