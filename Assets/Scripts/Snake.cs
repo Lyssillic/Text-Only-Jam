@@ -30,9 +30,14 @@ public class Snake : MonoBehaviour
     [Tooltip("The number of segments the snake has initially.")]
     public int initialSize = 4;
 
-
-    int fruitCollected = 0;
+    /// <summary>
+    /// The number of lives the snake has lost.
+    /// </summary>
     int livesLost = 0;
+
+    /// <summary>
+    /// The lives object that holds the snake life sprites.
+    /// </summary>
     public List<GameObject> livesObj;
 
     private void Awake()
@@ -48,6 +53,8 @@ public class Snake : MonoBehaviour
 
     private void Start()
     {
+        FruitCollected.fruitCollected = 0;
+        livesLost = 0;
         ResetState(false);
     }
 
@@ -157,6 +164,9 @@ public class Snake : MonoBehaviour
         {
             // Food eaten, increase the size of the snake
             Grow();
+
+            // Add fruit to collected
+            FruitCollected.fruitCollected++;
         }
         else if (other.tag == "Obstacle")
         {
