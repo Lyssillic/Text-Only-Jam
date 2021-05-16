@@ -40,6 +40,7 @@ public class Snake : MonoBehaviour
     /// </summary>
     public List<GameObject> livesObj;
 
+    public GameObject fruitObj;
     FruitCollected fruitScript;
 
     AudioSource audioSource;
@@ -60,7 +61,8 @@ public class Snake : MonoBehaviour
 
     private void Start()
     {
-        fruitScript = GameObject.Find("Fruit Collected").GetComponent<FruitCollected>();
+        GameObject fruitObj = GameObject.Find("Fruit Collected");
+        fruitScript = fruitObj.GetComponent<FruitCollected>();
         fruitScript.fruitCollected = 0;
         livesLost = 0;
         ResetState(false);
@@ -186,6 +188,7 @@ public class Snake : MonoBehaviour
 
             // Add fruit to collected
             fruitScript.fruitCollected++;
+            fruitScript.updateFruitCount(fruitObj, true);
         }
         else if (other.tag == "Obstacle")
         {
