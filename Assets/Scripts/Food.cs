@@ -23,7 +23,7 @@ public class Food : MonoBehaviour
 
     private void RandomizeFruit()
     {
-        int randomIndex = Random.Range(0, fruitSprites.Count-1);
+        int randomIndex = Random.Range(0, fruitSprites.Count);
         Sprite randomFruit = fruitSprites[randomIndex];
         GetComponent<SpriteRenderer>().sprite = randomFruit;
     }
