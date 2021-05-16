@@ -24,32 +24,37 @@ public class Selection : MonoBehaviour
 
     private void Start()
     {
+        Cursor.visible = false;
         sceneName = SceneManager.GetActiveScene().name;
-        btnSelectedIndex = 0;
-        previousBtnSelectedIndex = -1;
 
-        audioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
-        button = (AudioClip)Resources.Load("SFX/Button", typeof(AudioClip));
-        switchS = (AudioClip)Resources.Load("SFX/Switch", typeof(AudioClip));
-
-        if (sceneName == "Start")
+        if (sceneName != "Snake")
         {
-            quitBtn.onClick.AddListener(ExitGame);
-            playBtn.onClick.AddListener(StartBtn);
-            controlBtn.onClick.AddListener(ControlBtn);
-            buttons = new Button[] { playBtn, controlBtn, quitBtn };
+            btnSelectedIndex = 0;
+            previousBtnSelectedIndex = -1;
 
-            btnSelected = buttons[btnSelectedIndex];
-            updateBtn();
-        }
-        else if (sceneName == "End")
-        {
-            quitBtn.onClick.AddListener(ExitGame);
-            restartBtn.onClick.AddListener(RestartGame);
-            buttons = new Button[] { restartBtn, quitBtn };
+            audioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+            button = (AudioClip)Resources.Load("SFX/Button", typeof(AudioClip));
+            switchS = (AudioClip)Resources.Load("SFX/Switch", typeof(AudioClip));
 
-            btnSelected = buttons[btnSelectedIndex];
-            updateBtn();
+            if (sceneName == "Start")
+            {
+                quitBtn.onClick.AddListener(ExitGame);
+                playBtn.onClick.AddListener(StartBtn);
+                controlBtn.onClick.AddListener(ControlBtn);
+                buttons = new Button[] { playBtn, controlBtn, quitBtn };
+
+                btnSelected = buttons[btnSelectedIndex];
+                updateBtn();
+            }
+            else if (sceneName == "End")
+            {
+                quitBtn.onClick.AddListener(ExitGame);
+                restartBtn.onClick.AddListener(RestartGame);
+                buttons = new Button[] { restartBtn, quitBtn };
+
+                btnSelected = buttons[btnSelectedIndex];
+                updateBtn();
+            }
         }
     }
 
