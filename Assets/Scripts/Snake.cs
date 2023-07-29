@@ -154,7 +154,7 @@ public class Snake : MonoBehaviour
     public void ResetState(bool lose)
     {
         // Check livesLost, game over if 3
-        if (livesLost == 3)
+        if (livesLost == 2)
         {
             SceneManager.LoadScene("End");
         }
