@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -48,6 +49,8 @@ public class Snake : MonoBehaviour
     AudioClip whoosh;
     AudioClip crunch;
 
+    bool waiting;
+
     private void Awake()
     {
         _head = GetComponent<SnakeSegment>();
@@ -81,30 +84,44 @@ public class Snake : MonoBehaviour
             // Set the direction based on the input key being pressed
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
             {
+                waiting = true;
                 audioSource.PlayOneShot(whoosh, .5f);
                 _head.SetDirection(Vector2.up, Vector2.zero);
+                StartCoroutine(waitASec());
             }
             else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
             {
+                waiting = true;
                 audioSource.PlayOneShot(whoosh, .5f);
                 _head.SetDirection(Vector2.down, Vector2.zero);
+                StartCoroutine(waitASec());
             }
         }
         // If moving vertical, then only allow turning left or right
-        else if (_head.direction.y != 0.0f)
+        else if (_head.direction.y != 0.0f && !waiting)
         {
             // Set the direction based on the input key being pressed
             if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             {
+                waiting = true;
                 audioSource.PlayOneShot(whoosh, .5f);
                 _head.SetDirection(Vector2.right, Vector2.zero);
+                StartCoroutine(waitASec());
             }
             else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
+                waiting = true;
                 audioSource.PlayOneShot(whoosh, .5f);
                 _head.SetDirection(Vector2.left, Vector2.zero);
+                StartCoroutine(waitASec());
             }
         }
+    }
+
+    IEnumerator waitASec()
+    {
+        yield return new WaitForSeconds(.1f);
+        waiting = false;
     }
 
     private void FixedUpdate()
